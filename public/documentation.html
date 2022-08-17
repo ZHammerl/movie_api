@@ -1,16 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Documentation on myFlix App</title>
-</head>
-<body>
+  </head>
+  <body>
     <h1>myFlix API</h1>
-    <p> This API is the server-side component of a “movies” web application. The application will provide users with access to information about different  
-        movies, directors, and genres. Users will be able to sign up, update their  
-        personal information, and create a list of their favorite movies.</p>
-    
-</body>
+    <div class="description-text">
+      <p>
+        This API is the server-side component of a “movies” web application. The application will
+        provide users with access to information about different  movies, directors, and genres.
+        Users will be able to sign up, update their  personal information, and create a list of
+        their favorite movies.
+      </p>
+    </div>
+
+    <h2>URL endpoints and request methods</h2>
+    <table>
+      <tr>
+        <th>Business Logic</th>
+        <th>URL</th>
+        <th>HTTP Method</th>
+        <th>Request body data format</th>
+        <th>Response body data format</th>
+      </tr>
+      <tr>
+        <td>Get a list of all movies</td>
+        <td>/movies</td>
+        <td>GET</td>
+        <td>None</td>
+        <td>A JSON object holding data about all the movies</td>
+      </tr>
+      <tr>
+        <td>Get data about a single movie by title to the user</td>
+        <td>/movies/:title</td>
+        <td>GET</td>
+        <td>None</td>
+        <td>
+          A JSON object holding data about a single movie including its description, genre,
+          director, image URL and whether it's featured or not
+        </td>
+      </tr>
+      <tr>
+        <td>Get data about a genre (description) by name</td>
+        <td>/movies/genre/genrename</td>
+        <td>GET</td>
+        <td>None</td>
+        <td>
+          A JSON object containing all data about a single genre including its name (e.g.,
+          "Thriller") and description
+        </td>
+      </tr>
+      <tr>
+        <td>Get data about a director by name</td>
+        <td>/movies/directors/:director_name</td>
+        <td>GET</td>
+        <td>None</td>
+        <td>A JSON object holding data about a director (bio, birth year, death year) by name</td>
+      </tr>
+      <tr>
+        <td>Allow new users to register</td>
+        <td>/users</td>
+        <td>POST</td>
+        <td>
+          A JSON object holding data about the new user including their username, password, email
+          and birthday
+        </td>
+        <td>A text message indicating whether or not the new user was successfully added</td>
+      </tr>
+      <tr>
+        <td>Allow users to update their user info</td>
+        <td>/users/:username</td>
+        <td>PUT</td>
+        <td>
+          A JSON object containing data about a specific field that will be used to update that same
+          field in the specified user's current data
+        </td>
+        <td>A text message indicating whether or not updating the user was successfull</td>
+      </tr>
+      <tr>
+        <td>Allow users to add a movie to their list of favorites</td>
+        <td>/users/:username/movies/:title</td>
+        <td>POST</td>
+        <td>None</td>
+        <td>
+          A text message indicating whether or not the movie was successfully added to the user's
+          favorite list
+        </td>
+      </tr>
+      <tr>
+        <td>Allow users to remove a movie from their list of favorites </td>
+        <td>/users/:username/movies/:title</td>
+        <td>DELETE</td>
+        <td>None</td>
+        <td>
+          A text message indicating whether or not the movie was successfully removed from the user's
+          favorite list
+        </td>
+      </tr>
+      <tr>
+        <td>Allow existing users to deregister</td>
+        <td>/users/:username</td>
+        <td>DELETE</td>
+        <td>None</td>
+        <td>
+          A text message indicating that the user was successfully removed 
+        </td>
+      </tr>
+    </table>
+  </body>
 </html>

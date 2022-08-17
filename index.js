@@ -13,6 +13,8 @@ app.get('/', (req, res) => {
   res.send('Welcome to myFlix App!');
 });
 
+app.get('/')
+
 app.listen(8080, () => {
   console.log('Your app is listening on port 8080.');
 });

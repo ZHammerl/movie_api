@@ -45,7 +45,7 @@
       </tr>
       <tr>
         <td>Get data about a genre (description) by name</td>
-        <td>/movies/genre/genrename</td>
+        <td>/movies/genre/:genreName</td>
         <td>GET</td>
         <td>None</td>
         <td>
@@ -65,24 +65,28 @@
         <td>/users</td>
         <td>POST</td>
         <td>
-          A JSON object holding data about the new user including their username, password, email
-          and birthday
+          A JSON object holding data about the new user including their username, and favorite
+          movies.
+          <span>
+            { "_id": "62f5bf9c3c88b8fcbed91136", "name": "Joe", "favoriteMovies": [
+            "62e9a4f4e4da723567a25c55" ] }
+          </span>
         </td>
         <td>A text message indicating whether or not the new user was successfully added</td>
       </tr>
       <tr>
         <td>Allow users to update their user info</td>
-        <td>/users/:username</td>
+        <td>/users/:id</td>
         <td>PUT</td>
         <td>
-          A JSON object containing data about a specific field that will be used to update that same
-          field in the specified user's current data
+          A JSON object containing data about the user
+          <span>{ "name": "Joe", "favoriteMovies": [], }</span>
         </td>
         <td>A text message indicating whether or not updating the user was successfull</td>
       </tr>
       <tr>
         <td>Allow users to add a movie to their list of favorites</td>
-        <td>/users/:username/movies/:title</td>
+        <td>/users/:id/:movieTitle</td>
         <td>POST</td>
         <td>None</td>
         <td>
@@ -91,13 +95,13 @@
         </td>
       </tr>
       <tr>
-        <td>Allow users to remove a movie from their list of favorites </td>
-        <td>/users/:username/movies/:title</td>
+        <td>Allow users to remove a movie from their list of favorites</td>
+        <td>/users/:id/:movieTitle</td>
         <td>DELETE</td>
         <td>None</td>
         <td>
-          A text message indicating whether or not the movie was successfully removed from the user's
-          favorite list
+          A text message indicating whether or not the movie was successfully removed from the
+          user's favorite list
         </td>
       </tr>
       <tr>
@@ -105,9 +109,7 @@
         <td>/users/:username</td>
         <td>DELETE</td>
         <td>None</td>
-        <td>
-          A text message indicating that the user was successfully removed 
-        </td>
+        <td>A text message indicating that the user was successfully removed</td>
       </tr>
     </table>
   </body>

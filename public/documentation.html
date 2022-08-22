@@ -61,6 +61,24 @@
         <td>A JSON object holding data about a director (bio, birth year, death year) by name</td>
       </tr>
       <tr>
+        <td>Get a list of all users</td>
+        <td>/users</td>
+        <td>GET</td>
+        <td>None</td>
+        <td>A JSON object holding data about all the users</td>
+      </tr>
+
+      <tr>
+        <td>Get user by username</td>
+        <td>/users/:username</td>
+        <td>GET</td>
+        <td>None</td>
+        <td>
+          If the user doesn't exist, a text message stating that the user with that name doesn't
+          exist, if the user exists a JSON object holding data about the users
+        </td>
+      </tr>
+      <tr>
         <td>Allow new users to register</td>
         <td>/users</td>
         <td>POST</td>
@@ -68,11 +86,19 @@
           A JSON object holding data about the new user including their username, and favorite
           movies.
           <span>
-            { "_id": "62f5bf9c3c88b8fcbed91136", "name": "Joe", "favoriteMovies": [
-            "62e9a4f4e4da723567a25c55" ] }
+            { "Username": "Joe", "Password": "pw123", "Email": "Joe@mail.com", "Birth_date":
+            "YYYY-MM-DD" }
           </span>
         </td>
-        <td>A text message indicating whether or not the new user was successfully added</td>
+        <td>
+          If the user already exits, a text message indicating that a user with this Username
+          already exists. If the user is new a JSON object holding data of the new user and ID
+          <span>
+            { "Username": "Joe", "Password": "pw123", "Email": "Joe@mail.com", "Birth_date":
+            "2000-12-31T23:00:00.000Z", "FavoriteMovies": [], "_id": "6303ad5d2b46ea59a555ee46",
+            "__v": 0 }
+          </span>
+        </td>
       </tr>
       <tr>
         <td>Allow users to update their user info</td>
@@ -80,9 +106,19 @@
         <td>PUT</td>
         <td>
           A JSON object containing data about the user
-          <span>{ "name": "Joe", "favoriteMovies": [], }</span>
+          <span>
+            { "Username": "Joe", "Password": "pw123", "Email": "Joe@mail.com", "Birth_date":
+            "YYYY-MM-DD" }
+          </span>
         </td>
-        <td>A text message indicating whether or not updating the user was successfull</td>
+        <td>
+          A JSON object with the updated user information
+          <span>
+            { "Username": "Joe", "Password": "pw123", "Email": "Joe@mail.com", "Birth_date":
+            "2000-12-31T23:00:00.000Z", "FavoriteMovies": [], "_id": "6303ad5d2b46ea59a555ee46",
+            "__v": 0 }
+          </span>
+        </td>
       </tr>
       <tr>
         <td>Allow users to add a movie to their list of favorites</td>
@@ -90,8 +126,12 @@
         <td>POST</td>
         <td>None</td>
         <td>
-          A text message indicating whether or not the movie was successfully added to the user's
-          favorite list
+          A JSON object with the updated user information
+          <span>
+            { "Username": "Joe", "Password": "pw123", "Email": "Joe@mail.com", "Birth_date":
+            "2000-12-31T23:00:00.000Z", "FavoriteMovies": [], "_id": "6303ad5d2b46ea59a555ee46",
+            "__v": 0 }
+          </span>
         </td>
       </tr>
       <tr>
@@ -105,11 +145,11 @@
         </td>
       </tr>
       <tr>
-        <td>Allow existing users to deregister</td>
-        <td>/users/:username</td>
+        <td>Allow existing users to deregister by User ID</td>
+        <td>/users/:id</td>
         <td>DELETE</td>
         <td>None</td>
-        <td>A text message indicating that the user was successfully removed</td>
+        <td>A text message indicating that the user was successfully removed of that the user was not found</td>
       </tr>
     </table>
   </body>

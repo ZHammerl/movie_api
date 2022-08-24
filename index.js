@@ -12,7 +12,7 @@ const Movies = Models.Movie,
 
 mongoose.connect('mongodb://localhost:27017/myFlixDB', {
   useNewUrlParser: true,
-  useUnifiedTopology: true,
+  useUnifiedTopology: true, 
 });
 
 app.use(bodyParser.json());

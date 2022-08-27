@@ -11,7 +11,12 @@ const { check, validationResult } = require('express-validator');
 const Movies = Models.Movie,
   Users = Models.User;
 
-mongoose.connect('mongodb://localhost:27017/myFlixDB', {
+// mongoose.connect('mongodb://localhost:27017/myFlixDB', {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+// });
+
+mongoose.connect(process.env.CONNECTION_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -276,7 +281,7 @@ app.delete('/users/:id', passport.authenticate('jwt', { session: false }), (req,
 
 const port = process.env.PORT || 8080;
 app.listen(port, '0.0.0.0', () => {
-  console.log('Listenting on port ' + port);
+  console.log('Listening on Port ' + port);
 });
 
 app.use((err, req, res, next) => {

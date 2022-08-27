@@ -1,52 +1,77 @@
+// IMPORTS
 const bodyParser = require('body-parser'),
   express = require('express'),
-  app = express(),
   morgan = require('morgan'),
   uuid = require('uuid'),
+  fs = require('fs'),
   mongoose = require('mongoose'),
   path = require('path'),
   Models = require(path.resolve(__dirname, './models'));
 const { check, validationResult } = require('express-validator');
 
+// Configure Express
+const app = express();
+
+// Configure Mongoose Module
 const Movies = Models.Movie,
   Users = Models.User;
 
-// mongoose.connect('mongodb://localhost:27017/myFlixDB', {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-// });
-
-mongoose.connect(process.env.CONNECTION_URI, {
+mongoose.connect('mongodb://localhost:27017/myFlixDB', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
 
-const cors = require('cors');
-let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      if (!origin) return callback(null, true);
-      if (allowedOrigins.indexOf(origin) === -1) {
-        // If a specific origin isn’t found on the list of allowed origins
-        let message =
-          'The CORS policy for this application doesn"t allow access from origin ' + origin;
-        return callback(new Error(message), false);
-      }
-      return callback(null, true);
-    },
-  })
-);
+// mongoose.connect( process.env.CONNECTION_URI, {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+// });
 
+// Configure logging file access
+const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {
+  flags: 'a',
+});
+
+// Configure Date-Time Middleware
+const requestTime = (req, res, next) => {
+  req.requestTime = Date.now();
+  next();
+};
+
+// Configuring CORS (Cross-Origin-Ressource-Sharing)
+const cors = require('cors');
+app.use(cors()); // Option 1: allow all domains
+// Option 2: only allow domains in 'allowed origins'
+// let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
+// app.use(
+//   cors({
+//     origin: (origin, callback) => {
+//       if (!origin) return callback(null, true);
+//       if (allowedOrigins.indexOf(origin) === -1) {
+//         // If a specific origin isn’t found on the list of allowed origins
+//         let message =
+//           'The CORS policy for this application doesn"t allow access from origin ' + origin;
+//         return callback(new Error(message), false);
+//       }
+//       return callback(null, true);
+//     },
+//   })
+// );
+
+// use Middleware
+app.use(morgan('combined', { stream: accessLogStream }));
+app.use(requestTime);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan('common'));
 app.use(express.static('public'));
 
+// Authentication
 let auth = require('./auth')(app);
 const passport = require('passport');
 require('./passport');
 
+//ROUTING
+//Home
 app.get('/', (req, res) => {
   res.send('Welcome to myFlix App!');
 });
@@ -172,33 +197,21 @@ app.post(
 );
 
 // READ - Get all users
-app.get(
-  '/users',
-  [
-    check('Username', 'Username is required').isLength({ min: 5 }),
-    check(
-      'Username',
-      'Username contains non-alphanumeric characters - not allowed'
-    ).isAlphanumeric(),
-    check('Password', 'Password is required').not().isEmpty(),
-  ],
-  passport.authenticate('jwt', { session: false }),
-  (req, res) => {
-    let errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(422).json({ errors: errors.array() });
-    }
-    let hashedPassword = Users.hashPassword(req.body.Password);
-    Users.find()
-      .then((users) => {
-        res.status(201).json(users);
-      })
-      .catch((err) => {
-        console.error(err);
-        res.status(500).send('Error ' + err);
-      });
+app.get('/users', passport.authenticate('jwt', { session: false }), (req, res) => {
+  let errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() });
   }
-);
+  let hashedPassword = Users.hashPassword(req.body.Password);
+  Users.find()
+    .then((users) => {
+      res.status(201).json(users);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send('Error ' + err);
+    });
+});
 
 // READ - Get user by username
 app.get('/users/:userName', passport.authenticate('jwt', { session: false }), (req, res) => {
@@ -312,6 +325,8 @@ app.delete('/users/:id', passport.authenticate('jwt', { session: false }), (req,
       res.status(500).send('Error ' + err);
     });
 });
+
+// Server & Heroku
 
 const port = process.env.PORT || 8080;
 app.listen(port, '0.0.0.0', () => {

@@ -172,16 +172,33 @@ app.post(
 );
 
 // READ - Get all users
-app.get('/users/', passport.authenticate('jwt', { session: false }), (req, res) => {
-  Users.find()
-    .then((users) => {
-      res.status(201).json(users);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500).send('Error ' + err);
-    });
-});
+app.get(
+  '/users',
+  [
+    check('Username', 'Username is required').isLength({ min: 5 }),
+    check(
+      'Username',
+      'Username contains non-alphanumeric characters - not allowed'
+    ).isAlphanumeric(),
+    check('Password', 'Password is required').not().isEmpty(),
+  ],
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    let errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
+    let hashedPassword = Users.hashPassword(req.body.Password);
+    Users.find()
+      .then((users) => {
+        res.status(201).json(users);
+      })
+      .catch((err) => {
+        console.error(err);
+        res.status(500).send('Error ' + err);
+      });
+  }
+);
 
 // READ - Get user by username
 app.get('/users/:userName', passport.authenticate('jwt', { session: false }), (req, res) => {
@@ -202,28 +219,45 @@ app.get('/users/:userName', passport.authenticate('jwt', { session: false }), (r
 });
 
 // UPDATE - Allow users to update their user info
-app.put('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
-  Users.findOneAndUpdate(
-    { Username: req.params.Username },
-    {
-      $set: {
-        Username: req.body.Username,
-        Password: req.body.Password,
-        Email: req.body.Email,
-        Birth_date: req.body.Birth_date,
-      },
-    },
-    { new: true },
-    (err, updatedUser) => {
-      if (err) {
-        console.error(err);
-        res.status(500).send('Error ' + err);
-      } else {
-        res.json(updatedUser);
-      }
+app.put(
+  '/users/:Username',
+  [
+    check('Username', 'Username is required').isLength({ min: 5 }),
+    check(
+      'Username',
+      'Username contains non-alphanumeric characters - not allowed'
+    ).isAlphanumeric(),
+    check('Password', 'Password is required').not().isEmpty(),
+  ],
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    let errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
     }
-  );
-});
+    let hashedPassword = Users.hashPassword(req.body.Password);
+    Users.findOneAndUpdate(
+      { Username: req.params.Username },
+      {
+        $set: {
+          Username: req.body.Username,
+          Password: hashedPassword,
+          Email: req.body.Email,
+          Birth_date: req.body.Birth_date,
+        },
+      },
+      { new: true },
+      (err, updatedUser) => {
+        if (err) {
+          console.error(err);
+          res.status(500).send('Error ' + err);
+        } else {
+          res.json(updatedUser);
+        }
+      }
+    );
+  }
+);
 
 // CREATE - Allow user to add a movie to their list of favorites
 app.post(

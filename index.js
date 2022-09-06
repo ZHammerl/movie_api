@@ -198,13 +198,7 @@ app.post(
 
 // READ - Get all users
 app.get('/users', passport.authenticate('jwt', { session: false }), (req, res) => {
-  let errors = validationResult(req);
-  console.log(errors);
-  if (!errors.isEmpty()) {
-    return res.status(422).json({ errors: errors.array() });
-  }
-  let hashedPassword = Users.hashPassword(req.body.Password);
-  Users.find()
+   Users.find()
     .then((users) => {
       res.status(201).json(users);
     })

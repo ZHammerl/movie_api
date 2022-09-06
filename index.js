@@ -199,6 +199,7 @@ app.post(
 // READ - Get all users
 app.get('/users', passport.authenticate('jwt', { session: false }), (req, res) => {
   let errors = validationResult(req);
+  console.log(errors);
   if (!errors.isEmpty()) {
     return res.status(422).json({ errors: errors.array() });
   }

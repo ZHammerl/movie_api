@@ -317,7 +317,7 @@ app.delete('/users/:id', passport.authenticate('jwt', { session: false }), (req,
     })
     .catch((err) => {
       console.log(err);
-      res.status(500).send('Error ' + err);
+      res.status(500).send('Error from delete' + err);
     });
 });
 

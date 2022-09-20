@@ -41,7 +41,11 @@ const requestTime = (req, res, next) => {
 const cors = require('cors');
 app.use(cors()); // Option 1: allow all domains
 // Option 2: only allow domains in 'allowed origins'
-let allowedOrigins = ['http://localhost:8080', 'http://localhost:1234', 'https://myflix-app22.netlify.app'];
+let allowedOrigins = [
+  'http://localhost:8080',
+  'http://localhost:1234',
+  'https://myflix-app22.netlify.app',
+];
 
 app.use(
   cors({
@@ -201,7 +205,7 @@ app.post(
 app.get('/users', passport.authenticate('jwt', { session: false }), (req, res) => {
   Users.find()
     .then((users) => {
-      res.status(201).json(users);
+      res.status(200).json(users);
     })
     .catch((err) => {
       console.error(err);

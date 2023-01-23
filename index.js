@@ -50,7 +50,7 @@ app.use(cors()); // Option 1: allow all domains
 let allowedOrigins = [
   "http://localhost:8080",
   "http://localhost:1234",
-  "http://localhost:4200/",
+  "http://localhost:4200",
   "https://my-movie-db22.herokuapp.com",
   "https://myflix-app22.netlify.app",
 ];

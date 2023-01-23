@@ -45,7 +45,7 @@ const requestTime = (req, res, next) => {
 
 // Configuring CORS (Cross-Origin-Ressource-Sharing)
 const cors = require("cors");
-//app.use(cors()); // Option 1: allow all domains
+app.use(cors()); // Option 1: allow all domains
 // Option 2: only allow domains in 'allowed origins'
 let allowedOrigins = [
   "http://localhost:8080",

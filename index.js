@@ -53,7 +53,7 @@ let allowedOrigins = [
   "http://localhost:4200",
   "https://my-movie-db22.herokuapp.com",
   "https://myflix-app22.netlify.app",
-  "https://zhammerl.github.io/myflix-client-angular/",
+  "https://zhammerl.github.io",
 ];
 
 app.use(

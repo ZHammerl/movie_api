@@ -52,32 +52,32 @@ const requestTime = (req, res, next) => {
 
 // Configuring CORS (Cross-Origin-Ressource-Sharing)
 const cors = require("cors");
-app.use(cors()); // Option 1: allow all domains
+//app.use(cors()); // Option 1: allow all domains
 // Option 2: only allow domains in 'allowed origins'
-// let allowedOrigins = [
-//   "http://localhost:8080",
-//   "http://localhost:1234",
-//   "http://localhost:4200",
-//   "https://my-movie-db22.herokuapp.com",
-//   "https://myflix-app22.netlify.app",
-//   "https://zhammerl.github.io",
-// ];
+let allowedOrigins = [
+  "http://localhost:8080",
+  "http://localhost:1234",
+  "http://localhost:4200",
+  "https://my-movie-db22.herokuapp.com",
+  "https://myflix-app22.netlify.app",
+  "https://zhammerl.github.io",
+];
 
-// app.use(
-//   cors({
-//     origin: (origin, callback) => {
-//       if (!origin) return callback(null, true);
-//       if (allowedOrigins.indexOf(origin) === -1) {
-//         // If a specific origin isn’t found on the list of allowed origins
-//         let message =
-//           'The CORS policy for this application doesn"t allow access from origin ' +
-//           origin;
-//         return callback(new Error(message), false);
-//       }
-//       return callback(null, true);
-//     },
-//   })
-// );
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.indexOf(origin) === -1) {
+        // If a specific origin isn’t found on the list of allowed origins
+        let message =
+          'The CORS policy for this application doesn"t allow access from origin ' +
+          origin;
+        return callback(new Error(message), false);
+      }
+      return callback(null, true);
+    },
+  })
+);
 
 // use Middleware
 app.use(morgan("combined", { stream: accessLogStream }));

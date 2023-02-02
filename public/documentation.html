@@ -55,7 +55,7 @@
       </tr>
       <tr>
         <td>Get data about a director by name</td>
-        <td>/movies/directors/:director_name</td>
+        <td>/movies/directors/:directorName</td>
         <td>GET</td>
         <td>None</td>
         <td>A JSON object holding data about a director (bio, birth year, death year) by name</td>
@@ -85,6 +85,7 @@
         <td>
           A JSON object holding data about the new user including their username, and favorite
           movies.
+          Required: Username, Password, Email
           <span>
             { "Username": "Joe", "Password": "pw123", "Email": "Joe@mail.com", "Birth_date":
             "YYYY-MM-DD" }
@@ -102,10 +103,11 @@
       </tr>
       <tr>
         <td>Allow users to update their user info</td>
-        <td>/users/:id</td>
+        <td>/users/:Username</td>
         <td>PUT</td>
         <td>
-          A JSON object containing data about the user
+          A JSON object containing data about the user. 
+          Required: Username, Password, Email
           <span>
             { "Username": "Joe", "Password": "pw123", "Email": "Joe@mail.com", "Birth_date":
             "YYYY-MM-DD" }
@@ -122,7 +124,7 @@
       </tr>
       <tr>
         <td>Allow users to add a movie to their list of favorites</td>
-        <td>/users/:id/:movieTitle</td>
+        <td>/users/:Username/:movieId</td>
         <td>POST</td>
         <td>None</td>
         <td>
@@ -136,7 +138,7 @@
       </tr>
       <tr>
         <td>Allow users to remove a movie from their list of favorites</td>
-        <td>/users/:id/:movieTitle</td>
+        <td>/users/:Username/:movieId</td>
         <td>DELETE</td>
         <td>None</td>
         <td>
@@ -146,7 +148,7 @@
       </tr>
       <tr>
         <td>Allow existing users to deregister by User ID</td>
-        <td>/users/:id</td>
+        <td>/users/:Userid</td>
         <td>DELETE</td>
         <td>None</td>
         <td>A text message indicating that the user was successfully removed of that the user was not found</td>

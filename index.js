@@ -89,7 +89,10 @@ app.use(morgan("common")); //Invokes morgan to log URL requests to console
 /**
  * Serves sstatic content for the app from the 'public' directory
  */
-app.use(express.static("public"));
+app.use(
+  "/index",
+  express.static(path.join(__dirname, "public"))
+);
 
 // Authentication
 let auth = require("./auth")(app);
@@ -101,7 +104,7 @@ require("./passport");
  * GET: Index route
  * @returns Welcome message
  */
-app.get("/", (req, res) => {
+app.get("/home", (req, res) => {
   res.send("Welcome to myFlix App!");
 });
 
@@ -319,7 +322,7 @@ app.get(
     console.log(userName);
     Users.findOne({ Username: userName })
       .then((user) => {
-         // If a user with the corresponding username was found, return user info
+        // If a user with the corresponding username was found, return user info
         if (user) {
           res.status(200).json(user);
         } else {
@@ -371,7 +374,7 @@ app.put(
     let hashedPassword = Users.hashPassword(
       req.body.Password
     );
-     // Finds user by username
+    // Finds user by username
     Users.findOneAndUpdate(
       { Username: req.params.Username },
       {
@@ -382,13 +385,13 @@ app.put(
           Birthday: req.body.Birthday,
         },
       },
-      { new: true },                   //This line makes sure that the updated document is returned
+      { new: true }, //This line makes sure that the updated document is returned
       (err, updatedUser) => {
         if (err) {
           console.error(err);
           res.status(500).send("Error " + err);
         } else {
-          res.json(updatedUser);         // Returns JSON object of updatedUser
+          res.json(updatedUser); // Returns JSON object of updatedUser
         }
       }
     );
@@ -407,17 +410,17 @@ app.post(
   "/users/:Username/:MovieID",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-     // Finds user by username
+    // Finds user by username
     Users.findOneAndUpdate(
       { Username: req.params.Username },
       { $push: { FavoriteMovies: req.params.MovieID } }, // Adds movie to the list
-      { new: true },                                     // Returns updated document
+      { new: true }, // Returns updated document
       (err, updatedUser) => {
         if (err) {
           console.error(err);
           res.status(500).send("Error " + err);
         } else {
-          res.json(updatedUser);                          // Returns JSON object of updatedUser
+          res.json(updatedUser); // Returns JSON object of updatedUser
         }
       }
     );
@@ -504,4 +507,3 @@ const port = process.env.PORT || 8080;
 app.listen(port, "0.0.0.0", () => {
   console.log("Listening on Port " + port);
 });
-

@@ -3,156 +3,329 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
     <title>Documentation on myFlix App</title>
   </head>
   <body>
-    <h1>myFlix API</h1>
+    <header>
+      <h1>myFlix API</h1>
+    </header>
     <div class="description-text">
       <p>
-        This API is the server-side component of a “movies” web application. The application will
-        provide users with access to information about different  movies, directors, and genres.
-        Users will be able to sign up, update their  personal information, and create a list of
-        their favorite movies.
+        This is a <strong>REST</strong>(ful)
+        <strong>API</strong> that uses
+        <strong>HTTP requests</strong> to
+        <em>receive, send, create</em> and
+        <em>delete data</em> and <em>files</em>.
+        <br /><br />. This API is created for an application
+        called <strong>"myFlix"</strong>, which will provide
+        users with access to information about different
+        movies, directors, and genres. Users will be able to
+        sign up, update their personal information, and
+        create a list of their favorite movies.
       </p>
     </div>
 
-    <h2>URL endpoints and request methods</h2>
+    <h3>URL endpoints and request methods</h3>
     <table>
-      <tr>
-        <th>Business Logic</th>
-        <th>URL</th>
-        <th>HTTP Method</th>
-        <th>Request body data format</th>
-        <th>Response body data format</th>
-      </tr>
-      <tr>
-        <td>Get a list of all movies</td>
-        <td>/movies</td>
-        <td>GET</td>
-        <td>None</td>
-        <td>A JSON object holding data about all the movies</td>
-      </tr>
-      <tr>
-        <td>Get data about a single movie by title to the user</td>
-        <td>/movies/:title</td>
-        <td>GET</td>
-        <td>None</td>
-        <td>
-          A JSON object holding data about a single movie including its description, genre,
-          director, image URL and whether it's featured or not
-        </td>
-      </tr>
-      <tr>
-        <td>Get data about a genre (description) by name</td>
-        <td>/movies/genre/:genreName</td>
-        <td>GET</td>
-        <td>None</td>
-        <td>
-          A JSON object containing all data about a single genre including its name (e.g.,
-          "Thriller") and description
-        </td>
-      </tr>
-      <tr>
-        <td>Get data about a director by name</td>
-        <td>/movies/directors/:directorName</td>
-        <td>GET</td>
-        <td>None</td>
-        <td>A JSON object holding data about a director (bio, birth year, death year) by name</td>
-      </tr>
-      <tr>
-        <td>Get a list of all users</td>
-        <td>/users</td>
-        <td>GET</td>
-        <td>None</td>
-        <td>A JSON object holding data about all the users</td>
-      </tr>
+      <thead>
+        <tr>
+          <th>Business Logic</th>
+          <th>URL</th>
+          <th>HTTP Method</th>
+          <th>Request body data format</th>
+          <th>Response body data format</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Get a list of all movies</td>
+          <td>/movies</td>
+          <td>GET</td>
+          <td>None</td>
+          <td>
+            A JSON object holding data about all the movies
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Get data about a single movie by title to the
+            user
+          </td>
+          <td>/movies/:title</td>
+          <td>GET</td>
+          <td>None</td>
+          <td>
+            A JSON object holding data about a single movie
+            including its description, genre, director,
+            actors image URL and whether it's featured or
+            not. Example: <br /><br />
+            {<br />
+            "_id": ObjectId("Number"), <br />
+            "Title": "Silence of the Lambs",<br />
+            "Description": "A young FBI cadet must receive
+            the help of an incarcerated and manipul…",<br />
+            "Genre": {<br />
+            "Name": "Thriller",<br />
+            "Description": "Thriller film, also known as
+            suspense film or suspense thriller, is a ...<br />
+            },<br />
+            "Director": {<br />
+            "Name": "Jonathan Demme",<br />
+            "Bio": "Robert Jonathan Demme was an American
+            director, producer, and screenwr..."<br />
+            "Birthyear": "1944",<br />
+            "Deathyear": "2017",<br />
+            "Movies": Array,<br />
+            },<br />
+            "Imageurl":
+            "https://m.media-amazon.com/images/M/MV5BZjFlMGIwNzMtMWNmNy00MmU2LTg4MT…",<br />
+            "Actors": Array, <br />
+            Featured: true<br />
+            }
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Get data about a genre (description) by name
+          </td>
+          <td>/movies/genre/:genreName</td>
+          <td>GET</td>
+          <td>None</td>
+          <td>
+            A JSON object containing all data about a single
+            genre including its name (e.g., "Thriller") and
+            description. Example:<br />
+            "Genre": <br />
+            {<br />
+            "Name": "Thriller",<br />
+            "Description": "Thriller film, also known as
+            suspense film or suspense thriller, is a ...<br />
+            },<br />
+          </td>
+        </tr>
+        <tr>
+          <td>Get data about a director by name</td>
+          <td>/movies/directors/:directorName</td>
+          <td>GET</td>
+          <td>None</td>
+          <td>
+            A JSON object holding data about a director
+            (bio, birth year, death year) by name.
+            Example:<br />
+            "Director": <br />
+            {<br />
+            "Name": "Jonathan Demme",<br />
+            "Bio": "Robert Jonathan Demme was an American
+            director, producer, and screenwr..."<br />
+            "Birthyear": "1944",<br />
+            "Deathyear": "2017",<br />
+            "Movies": Array,<br />
+            },<br />
+          </td>
+        </tr>
+        <tr>
+          <td>Get a list of all users</td>
+          <td>/users</td>
+          <td>GET</td>
+          <td>None</td>
+          <td>
+            A JSON object holding data about all the users.
+            Example: <br />
+            [ <br />
+            { "_id": "6311db21d45b873dccb3141b",<br />
+            "Username": "Arturo", <br />
+            "Password": "hashed password", <br />
+            "Email": "test@mail.com", <br />
+            "Birth_date": "2001-01-01T00:00:00.000Z", <br />
+            "FavoriteMovies": [], <br />
+            "__v": 0 }, <br />
+            { "_id": "6315d6fdec892bc82a6a5e2e", <br />
+            "Username": "bianca", <br />
+            "Password":"hashed password", <br />
+            "Email": "bianca@test.com", <br />
+            "FavoriteMovies": [], <br />
+            "__v": 0 }, <br />
+            ...]
+          </td>
+        </tr>
 
-      <tr>
-        <td>Get user by username</td>
-        <td>/users/:username</td>
-        <td>GET</td>
-        <td>None</td>
-        <td>
-          If the user doesn't exist, a text message stating that the user with that name doesn't
-          exist, if the user exists a JSON object holding data about the users
-        </td>
-      </tr>
-      <tr>
-        <td>Allow new users to register</td>
-        <td>/users</td>
-        <td>POST</td>
-        <td>
-          A JSON object holding data about the new user including their username, and favorite
-          movies.
-          Required: Username, Password, Email
-          <span>
-            { "Username": "Joe", "Password": "pw123", "Email": "Joe@mail.com", "Birth_date":
-            "YYYY-MM-DD" }
-          </span>
-        </td>
-        <td>
-          If the user already exits, a text message indicating that a user with this Username
-          already exists. If the user is new a JSON object holding data of the new user and ID
-          <span>
-            { "Username": "Joe", "Password": "pw123", "Email": "Joe@mail.com", "Birth_date":
-            "2000-12-31T23:00:00.000Z", "FavoriteMovies": [], "_id": "6303ad5d2b46ea59a555ee46",
-            "__v": 0 }
-          </span>
-        </td>
-      </tr>
-      <tr>
-        <td>Allow users to update their user info</td>
-        <td>/users/:Username</td>
-        <td>PUT</td>
-        <td>
-          A JSON object containing data about the user. 
-          Required: Username, Password, Email
-          <span>
-            { "Username": "Joe", "Password": "pw123", "Email": "Joe@mail.com", "Birth_date":
-            "YYYY-MM-DD" }
-          </span>
-        </td>
-        <td>
-          A JSON object with the updated user information
-          <span>
-            { "Username": "Joe", "Password": "pw123", "Email": "Joe@mail.com", "Birth_date":
-            "2000-12-31T23:00:00.000Z", "FavoriteMovies": [], "_id": "6303ad5d2b46ea59a555ee46",
-            "__v": 0 }
-          </span>
-        </td>
-      </tr>
-      <tr>
-        <td>Allow users to add a movie to their list of favorites</td>
-        <td>/users/:Username/:movieId</td>
-        <td>POST</td>
-        <td>None</td>
-        <td>
-          A JSON object with the updated user information
-          <span>
-            { "Username": "Joe", "Password": "pw123", "Email": "Joe@mail.com", "Birth_date":
-            "2000-12-31T23:00:00.000Z", "FavoriteMovies": [], "_id": "6303ad5d2b46ea59a555ee46",
-            "__v": 0 }
-          </span>
-        </td>
-      </tr>
-      <tr>
-        <td>Allow users to remove a movie from their list of favorites</td>
-        <td>/users/:Username/:movieId</td>
-        <td>DELETE</td>
-        <td>None</td>
-        <td>
-          A text message indicating whether or not the movie was successfully removed from the
-          user's favorite list
-        </td>
-      </tr>
-      <tr>
-        <td>Allow existing users to deregister by User ID</td>
-        <td>/users/:Userid</td>
-        <td>DELETE</td>
-        <td>None</td>
-        <td>A text message indicating that the user was successfully removed of that the user was not found</td>
-      </tr>
+        <tr>
+          <td>Get user by username</td>
+          <td>/users/:username</td>
+          <td>GET</td>
+          <td>None</td>
+          <td>
+            If the user doesn't exist, a text message
+            stating that the user with that name doesn't
+            exist, if the user exists a JSON object holding
+            data about the users. Example: <br />
+            {<br />
+            "_id": "63d3aa1be998b33f28c121ce", <br />
+            "Username": "tester123", <br />
+            "Password": "hashed Password", <br />
+            "Email": "franziska@longemail.com", <br />
+            "Birthday": "2023-01-29T23:00:00.000Z", <br />
+            "FavoriteMovies": [<br />
+            "6300c8b65916d8d5a73c17e4",<br />
+            "6300c8b65916d8d5a73c17e6",<br />
+            "6300c8b65916d8d5a73c17e0",<br />
+            "6300c8b65916d8d5a73c17e3",<br />
+            "6300c8b65916d8d5a73c17e1" ],<br />
+            "__v": 0 <br />
+            }
+          </td>
+        </tr>
+        <tr>
+          <td>Allow new users to register</td>
+          <td>/users</td>
+          <td>POST</td>
+          <td>
+            A JSON object holding data about the new user
+            including their username, and favorite movies.
+            Required: Username, Password, Email. Example:
+            <br />
+            <span>
+              {<br />
+              "Username": "Joe", <br />
+              "Password": "pw123", <br />
+              "Email": "Joe@mail.com", <br />
+              "Birth_date": "YYYY-MM-DD" <br />
+              }
+            </span>
+          </td>
+          <td>
+            If the user already exits, a text message
+            indicating that a user with this Username
+            already exists. If the user is new a JSON object
+            holding data of the new user and ID
+            <span>
+              { <br />
+              "Username": "Joe", <br />
+              "Password": "hashed Password", <br />
+              "Email": "Joe@mail.com",<br />
+              "Birth_date": "2000-12-31T23:00:00.000Z",
+              <br />
+              "FavoriteMovies": [], <br />
+              "__v": 0 <br />
+              }
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td>Allow user to login</td>
+          <td>/login</td>
+          <td>POST</td>
+          <td>
+            URI with two params: Username and Password
+          </td>
+          <td>
+            If the user exits, and the password is correct a JSON object
+            holding data of the user and token. Example: <br />
+            <span>
+              {<br />
+                "user": {<br />
+                    "_id": "63d3aa1be998b33f28c121ce",<br />
+                    "Username": "tester123",<br />
+                    "Password": "hashed Password", <br />
+                    "Email": "franziska@longemail.com",<br />
+                    "Birthday": "2023-01-29T23:00:00.000Z",<br />
+                    "FavoriteMovies": [<br />
+                        "6300c8b65916d8d5a73c17e4",<br />
+                    ],<br />
+                    "__v": 0<br />
+                },<br />
+                "token": "eyJhbGciOiJIUzI1..."<br />
+            }
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td>Allow users to update their user info</td>
+          <td>/users/:Username</td>
+          <td>PUT</td>
+          <td>
+            A JSON object containing data about the user.
+            Required: Username, Password, Email
+            <span>
+              {<br />
+                "Username": "Joe", <br />
+                "Password": "pw123", <br />
+                "Email": "Joe@mail.com", <br />
+                "Birth_date": "YYYY-MM-DD" <br />
+                }
+            </span>
+          </td>
+          <td>
+            A JSON object with the updated user information
+            <span>
+              { <br />
+                "Username": "Joe", <br />
+                "Password": "hashed Password", <br />
+                "Email": "Joe@mail.com",<br />
+                "Birth_date": "2000-12-31T23:00:00.000Z",
+                <br />
+                "FavoriteMovies": [], <br />
+                "__v": 0 <br />
+                }
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Allow users to add a movie to their list of
+            favorites
+          </td>
+          <td>/users/:Username/:movieId</td>
+          <td>POST</td>
+          <td>None</td>
+          <td>
+            A JSON object with the updated user information
+            <span>
+              { <br />
+                "Username": "Joe", <br />
+                "Password": "hashed Password", <br />
+                "Email": "Joe@mail.com",<br />
+                "Birth_date": "2000-12-31T23:00:00.000Z",
+                <br />
+                "FavoriteMovies": [], <br />
+                "_id": "6303ad5d2b46ea59a555ee46", <br />
+                "__v": 0 <br />
+                }
+                      </span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Allow users to remove a movie from their list of
+            favorites
+          </td>
+          <td>/users/:Username/:movieId</td>
+          <td>DELETE</td>
+          <td>None</td>
+          <td>
+            A text message indicating whether or not the
+            movie was successfully removed from the user's
+            favorite list.
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Allow existing users to deregister by User ID
+          </td>
+          <td>/users/:Userid</td>
+          <td>DELETE</td>
+          <td>None</td>
+          <td>
+            A text message indicating that the user was
+            successfully removed of that the user was not
+            found.
+          </td>
+        </tr>
+      </tbody>
     </table>
   </body>
 </html>

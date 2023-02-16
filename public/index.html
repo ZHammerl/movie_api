@@ -7,7 +7,11 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0"
     />
-    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="styles.css"
+    />
     <title>Documentation on myFlix App</title>
   </head>
   <body>
@@ -218,29 +222,30 @@
         </tr>
         <tr>
           <td>Allow user to login</td>
-          <td>/login</td>
-          <td>POST</td>
           <td>
-            URI with two params: Username and Password
+            /login?Username={Username}&Password={password}
           </td>
+          <td>POST</td>
+          <td>None</td>
           <td>
-            If the user exits, and the password is correct a JSON object
-            holding data of the user and token. Example: <br />
+            If the user exits, and the password is correct a
+            JSON object holding data of the user and token.
+            Example: <br />
             <span>
               {<br />
-                "user": {<br />
-                    "_id": "63d3aa1be998b33f28c121ce",<br />
-                    "Username": "tester123",<br />
-                    "Password": "hashed Password", <br />
-                    "Email": "franziska@longemail.com",<br />
-                    "Birthday": "2023-01-29T23:00:00.000Z",<br />
-                    "FavoriteMovies": [<br />
-                        "6300c8b65916d8d5a73c17e4",<br />
-                    ],<br />
-                    "__v": 0<br />
-                },<br />
-                "token": "eyJhbGciOiJIUzI1..."<br />
-            }
+              "user": {<br />
+              "_id": "63d3aa1be998b33f28c121ce",<br />
+              "Username": "tester123",<br />
+              "Password": "hashed Password", <br />
+              "Email": "franziska@longemail.com",<br />
+              "Birthday": "2023-01-29T23:00:00.000Z",<br />
+              "FavoriteMovies": [<br />
+              "6300c8b65916d8d5a73c17e4",<br />
+              ],<br />
+              "__v": 0<br />
+              },<br />
+              "token": "eyJhbGciOiJIUzI1..."<br />
+              }
             </span>
           </td>
         </tr>
@@ -253,25 +258,25 @@
             Required: Username, Password, Email
             <span>
               {<br />
-                "Username": "Joe", <br />
-                "Password": "pw123", <br />
-                "Email": "Joe@mail.com", <br />
-                "Birth_date": "YYYY-MM-DD" <br />
-                }
+              "Username": "Joe", <br />
+              "Password": "pw123", <br />
+              "Email": "Joe@mail.com", <br />
+              "Birth_date": "YYYY-MM-DD" <br />
+              }
             </span>
           </td>
           <td>
             A JSON object with the updated user information
             <span>
               { <br />
-                "Username": "Joe", <br />
-                "Password": "hashed Password", <br />
-                "Email": "Joe@mail.com",<br />
-                "Birth_date": "2000-12-31T23:00:00.000Z",
-                <br />
-                "FavoriteMovies": [], <br />
-                "__v": 0 <br />
-                }
+              "Username": "Joe", <br />
+              "Password": "hashed Password", <br />
+              "Email": "Joe@mail.com",<br />
+              "Birth_date": "2000-12-31T23:00:00.000Z",
+              <br />
+              "FavoriteMovies": [], <br />
+              "__v": 0 <br />
+              }
             </span>
           </td>
         </tr>
@@ -287,16 +292,16 @@
             A JSON object with the updated user information
             <span>
               { <br />
-                "Username": "Joe", <br />
-                "Password": "hashed Password", <br />
-                "Email": "Joe@mail.com",<br />
-                "Birth_date": "2000-12-31T23:00:00.000Z",
-                <br />
-                "FavoriteMovies": [], <br />
-                "_id": "6303ad5d2b46ea59a555ee46", <br />
-                "__v": 0 <br />
-                }
-                      </span>
+              "Username": "Joe", <br />
+              "Password": "hashed Password", <br />
+              "Email": "Joe@mail.com",<br />
+              "Birth_date": "2000-12-31T23:00:00.000Z",
+              <br />
+              "FavoriteMovies": [], <br />
+              "_id": "6303ad5d2b46ea59a555ee46", <br />
+              "__v": 0 <br />
+              }
+            </span>
           </td>
         </tr>
         <tr>

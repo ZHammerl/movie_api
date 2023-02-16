@@ -90,7 +90,7 @@ app.use(morgan("common")); //Invokes morgan to log URL requests to console
  * Serves sstatic content for the app from the 'public' directory
  */
 app.use(
-  "/documentation",
+  "/index",
   express.static(path.join(__dirname, "public"))
 );
 
